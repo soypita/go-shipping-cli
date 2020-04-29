@@ -3,6 +3,6 @@ module github.com/soypita/go-shipping-cli
 go 1.14
 
 require (
-	github.com/soypita/go-shipping v0.0.0-20200429083414-07aebc1a588b
-	google.golang.org/grpc v1.29.1
+	github.com/micro/go-micro v1.18.0
+	github.com/soypita/go-shipping v0.0.0-20200429114137-85fc1ab73cd2
 )
