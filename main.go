@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
 
 	"github.com/micro/go-micro"
 	pb "github.com/soypita/go-shipping/proto/consignment"
@@ -42,13 +43,17 @@ func main() {
 		log.Fatalf("Could not parse file: %v", err)
 	}
 
+	time.Sleep(time.Duration(5 * time.Second))
+
 	r, err := client.CreateConsignment(context.Background(), consignment)
+
 	if err != nil {
 		log.Fatalf("Could not greet: %v", err)
 	}
 	log.Printf("Created: %t", r.Created)
 
 	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
+
 	if err != nil {
 		log.Fatalf("Could not list consignments: %v", err)
 	}
