@@ -9,12 +9,14 @@ import (
 	"time"
 
 	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/metadata"
 	pb "github.com/soypita/go-shipping/proto/consignment"
 )
 
 const (
 	address         = "localhost:50051"
 	defaultFilename = "consignment.json"
+	token           = ""
 )
 
 func parseFile(file string) (*pb.Consignment, error) {
@@ -45,14 +47,18 @@ func main() {
 
 	time.Sleep(time.Duration(5 * time.Second))
 
-	r, err := client.CreateConsignment(context.Background(), consignment)
+	ctx := metadata.NewContext(context.Background(), map[string]string{
+		"token": token,
+	})
+
+	r, err := client.CreateConsignment(ctx, consignment)
 
 	if err != nil {
 		log.Fatalf("Could not greet: %v", err)
 	}
 	log.Printf("Created: %t", r.Created)
 
-	getAll, err := client.GetConsignments(context.Background(), &pb.GetRequest{})
+	getAll, err := client.GetConsignments(ctx, &pb.GetRequest{})
 
 	if err != nil {
 		log.Fatalf("Could not list consignments: %v", err)
